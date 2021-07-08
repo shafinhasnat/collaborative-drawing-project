@@ -30,7 +30,9 @@ function App() {
     
   }
   const finishDrawing = () => {
+    var canvas = document.querySelector('#board');
     contextRef.current.closePath();
+    var base64ImageData = canvas.toDataURL("image/png");
     setIsDrawing(false);
   }
 
@@ -46,6 +48,8 @@ function App() {
 
   return (
     <canvas
+      className="board"
+      id="board"
       onMouseDown={startDrawing}
       onMouseUp={finishDrawing}
       onMouseMove={draw}

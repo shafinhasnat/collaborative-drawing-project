@@ -5,19 +5,16 @@ function App() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const socket = new WebSocket('ws://localhost:5000');
+  const socket = new WebSocket('ws://192.168.0.102:5000');
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
     const context = canvas.getContext("2d");
-    context.scale(2,2);
+    context.canvas.height = window.innerHeight;
+    context.canvas.width = window.innerWidth;
     context.lineCap = "round";
     context.strokeStyle = "black";
-    context.lineWidth = 5;
+    context.lineWidth = 10;
 
     socket.addEventListener('open', function (event) {
       console.log('Connected to WS Server')
@@ -45,8 +42,12 @@ function App() {
   const finishDrawing = () => {
     var canvas = document.querySelector('#board');
     contextRef.current.closePath();
-    var base64ImageData = canvas.toDataURL("image/png");
-    socket.send(base64ImageData)
+    const timeout = setTimeout(() => {
+      var base64ImageData = canvas.toDataURL("image/png");
+      socket.send(base64ImageData)
+    }, 500);
+    if (!timeout) clearTimeout(timeout);
+    
     setIsDrawing(false);
   }
 

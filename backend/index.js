@@ -7,7 +7,7 @@ const server = require('http').createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
-    // console.log("New connection");
+    console.log("New connection");
     ws.on('message', (data) => {
         wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {

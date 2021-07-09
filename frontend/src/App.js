@@ -16,13 +16,13 @@ function App() {
     context.strokeStyle = "black";
     context.lineWidth = 10;
 
-    socket.addEventListener('open', function (event) {
+    socket.addEventListener('open', event => {
       console.log('Connected to WS Server')
     });
 
-    socket.addEventListener('message', function incoming(data) {
+    socket.addEventListener('message', data => {
       var image = new Image();
-      image.onload = function() {
+      image.onload = () => {
         context.drawImage(image, 0, 0);
       };
       image.src = data.data;

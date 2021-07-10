@@ -5,9 +5,13 @@ function App() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const socket = new WebSocket('ws://192.168.0.102:5000');
+
+const PORT = process.env.PORT_SERVER;
+// const HOST = process.env.HOST;
+  const socket = new WebSocket(`ws://192.168.0.103:5001`);
 
   useEffect(() => {
+    console.log(PORT)
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.canvas.height = window.innerHeight;
